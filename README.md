@@ -1,6 +1,6 @@
 <div align="center">
   <img alt="auto-cli logo" width="120" height="120" src="./logo.png">
-  <h1>auto-cli</h1>
+  <h1>convert-vue-scoped</h1>
   <span>English | <a href="./README.zh-CN.md">中文</a></span>
 </div>
 
@@ -12,7 +12,7 @@ To address the issue that `vue-scoped` does not support mini-programs in Taro, `
 Install dependencies
 
 ```sh
-pnpm i @stellaround/auto-cli -D
+pnpm i @stellaround/convert-vue-scoped -D
 ```
 
 Configuration in Taro config file
@@ -22,8 +22,8 @@ Configuration in Taro config file
         chain.module
             .rule('vueFiles')
             .test(/\.vue$/) // 匹配.vue文件
-            .use('convert-vue-scoped')
-            .loader('convert-vue-scoped');
+            .use('@stellaround/convert-vue-scoped')
+            .loader('@stellaround/convert-vue-scoped');
         //...
     }
     //...

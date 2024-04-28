@@ -23,8 +23,8 @@ Taro config文件配置
         chain.module
             .rule('vueFiles')
             .test(/\.vue$/) // 匹配.vue文件
-            .use('convert-vue-scoped')
-            .loader('convert-vue-scoped');
+            .use('@stellaround/convert-vue-scoped')
+            .loader('@stellaround/convert-vue-scoped');
         //...
     }
     //...
