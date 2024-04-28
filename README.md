@@ -1,0 +1,2 @@
+# convert-vue-scoped
+这是一个将vue中含有scoped的style转换为动态添加class来实现小程序的支持
