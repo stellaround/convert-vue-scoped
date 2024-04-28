@@ -1,0 +1,26 @@
+{
+  "name": "@stellaround/convert-vue-scoped",
+  "version": "1.0.0",
+  "description": "针对Taro中vue-scoped不支持小程序的问题，将vue中含有scoped的style转换为动态添加class来实现小程序的支持。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stellaround/convert-vue-scoped.git"
+  },
+  "author": "spectateur",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/stellaround/convert-vue-scoped/issues"
+  },
+  "homepage": "https://github.com/stellaround/convert-vue-scoped#readme",
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  },
+  "dependencies": {
+    "@vue/compiler-sfc": "^3.4.25",
+    "jsdom": "^24.0.0"
+  }
+}
