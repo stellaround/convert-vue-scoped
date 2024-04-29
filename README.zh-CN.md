@@ -22,7 +22,9 @@ Taro config文件配置
     webpackChain(chain) {
         chain.module
             .rule('vueFiles')
-            .test(/\.vue$/) // 匹配.vue文件
+            .test(/\.vue$/)
+            .include.add(path.resolve(__dirname, '../src/views')) // 要修改的vue文件范围
+            .end()
             .use('@stellaround/convert-vue-scoped')
             .loader('@stellaround/convert-vue-scoped');
         //...
