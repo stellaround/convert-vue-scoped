@@ -5,7 +5,7 @@
 </div>
 
 # Introduction
-To address the issue that `vue-scoped` does not support mini-programs in Taro, `convert-vue-scoped` transforms styles with scoped in Vue into dynamically added classes to achieve support for mini-programs.
+To address the issue that `vue-scoped` does not support mini-programs in Taro, `convert-vue-scoped` transforms styles with scoped in Vue into dynamically added classes to achieve support for mini-programs.(Tested h5 and WeChat Mini Programs)
 
 ## Quick Start
 

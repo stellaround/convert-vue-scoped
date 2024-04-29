@@ -5,7 +5,7 @@
 </div>
 
 # 简介
-针对Taro中vue-scoped不支持小程序的问题，将vue中含有scoped的style转换为动态添加class来实现小程序的支持。
+针对Taro中vue-scoped不支持小程序的问题，将vue中含有scoped的style转换为动态添加class来实现小程序的支持。(已测试h5和微信小程序)
 
 ## 快速开始
 
