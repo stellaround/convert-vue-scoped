@@ -84,9 +84,15 @@ module.exports = function (source) {
             return `  ${line}`;
           })
           .join("\n");
-        newContent.push(
-          `<style${style.attrs.lang ? ` lang="${style.attrs.lang}"` : ""}>${indentedContent}</style>`,
-        );
+        if (style.scoped) {
+          newContent.push(
+            `<style${style.attrs.lang ? ` lang="${style.attrs.lang}"` : ""}>${indentedContent}</style>`,
+          );
+        } else {
+          newContent.push(
+            `<style${style.attrs.lang ? ` lang="${style.attrs.lang}"` : ""}>${style.content}</style>`,
+          );
+        }
       });
     }
 

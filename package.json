@@ -1,6 +1,6 @@
 {
   "name": "@stellaround/convert-vue-scoped",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "针对Taro中vue-scoped不支持小程序的问题，将vue中含有scoped的style转换为动态添加class来实现小程序的支持。",
   "main": "index.js",
   "scripts": {
