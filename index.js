@@ -6,7 +6,7 @@ module.exports = function (source) {
   const filePath = this.resourcePath; // 获取当前正在处理的文件的完整路径
   const fileName = path.basename(filePath, ".vue"); // 获取文件名，去掉 .vue 扩展名
 
-  // 使用你的转换逻辑对源文件内容进行转换
+  // 使用转换逻辑对源文件内容进行转换
   const { descriptor } = parse(source, { filename: filePath });
 
   if (descriptor.template) {
@@ -30,7 +30,7 @@ module.exports = function (source) {
         .split("\n") // 按行分割
         .map((line) => (line ? `  ${line}` : line)) // 对非空行添加两个空格的缩进
         .join("\n"); // 重组字符串
-      // 考虑到我们在使用outerHTML，我们需要在结果的开头和结尾分别加上 '\n' 表示新的空行
+      // 因为使用outerHTML，需要在结果的开头和结尾分别加上 '\n' 表示新的空行
       completeHTML = `\n${completeHTML}\n`;
 
       templateElement.innerHTML = completeHTML; // 把新的根标签view加回到template中
