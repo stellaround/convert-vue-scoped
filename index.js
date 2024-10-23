@@ -2,9 +2,32 @@ const path = require("path");
 const JSDOM = require("jsdom").JSDOM;
 const parse = require("@vue/compiler-sfc").parse;
 
+const { v4: uuidv4 } = require("uuid");
+
+function generateShortUUID() {
+  // 生成 UUID 并取前 6 个字符
+  return uuidv4().replace(/-/g, "").substring(0, 6);
+}
+
+const dealFile = [];
+const fileClassName = [];
+
 module.exports = function (source) {
   const filePath = this.resourcePath; // 获取当前正在处理的文件的完整路径
   const fileName = path.basename(filePath, ".vue"); // 获取文件名，去掉 .vue 扩展名
+  let wrapperClassName;
+  if (!dealFile.includes(filePath)) {
+    wrapperClassName = `stellaround-page-${fileName}-${generateShortUUID()}`;
+    dealFile.push(filePath);
+    fileClassName.push({
+      file: filePath,
+      className: wrapperClassName,
+    });
+  } else {
+    wrapperClassName = fileClassName.find(
+      (item) => item.file === filePath,
+    ).className;
+  }
 
   // 使用转换逻辑对源文件内容进行转换
   const { descriptor } = parse(source, { filename: filePath });
@@ -12,15 +35,13 @@ module.exports = function (source) {
   if (descriptor.template) {
     const dom = new JSDOM(`<body>${descriptor.template.content}</body>`);
     const templateElement = dom.window.document.body;
-    // 检查是否有根标签
-
+    // 检查是否处理过了
     if (
-      templateElement.children.length !== 1 ||
-      templateElement.firstElementChild?.nodeName !== "VIEW"
+      !templateElement.firstElementChild.classList[0].includes("stellaround")
     ) {
       // 创建新的根标签view
       const viewElement = dom.window.document.createElement("view");
-      viewElement.classList.add(`page-${fileName}-scoped`);
+      viewElement.classList.add(wrapperClassName);
       while (templateElement.firstChild) {
         viewElement.appendChild(templateElement.firstChild); // 移动所有子元素到新的根标签view
       }
@@ -34,10 +55,6 @@ module.exports = function (source) {
       completeHTML = `\n${completeHTML}\n`;
 
       templateElement.innerHTML = completeHTML; // 把新的根标签view加回到template中
-    } else {
-      templateElement.firstElementChild.classList.add(
-        `page-${fileName}-scoped`,
-      );
     }
 
     // 将编译后的模板代码替换原始模板代码
@@ -64,8 +81,7 @@ module.exports = function (source) {
       newContent.push('<style lang="less"></style>');
     } else {
       descriptor.styles.forEach((style) => {
-        const wrapperClassName = `.page-${fileName}-scoped`;
-        const scopedStyleContent = `\n${wrapperClassName} {${style.content}}\n`;
+        const scopedStyleContent = `\n.${wrapperClassName} {${style.content}}\n`;
         // 分割、缩进处理和结构重组
 
         const indentedContent = scopedStyleContent
@@ -85,6 +101,7 @@ module.exports = function (source) {
           })
           .join("\n");
         if (style.scoped) {
+          // console.log(indentedContent);
           newContent.push(
             `<style${style.attrs.lang ? ` lang="${style.attrs.lang}"` : ""}>${indentedContent}</style>`,
           );
@@ -95,7 +112,6 @@ module.exports = function (source) {
         }
       });
     }
-
     return `${newContent}.join('\n\n')}\n`;
   } else {
     return source;
